@@ -1,5 +1,4 @@
 import React from "react";
-import Chip from "@mui/material/Chip";
 import styles from "./Card.module.css";
 
 const Card = ({ image, follows, title }) => {
