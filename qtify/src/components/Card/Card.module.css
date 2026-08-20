@@ -1,16 +1,17 @@
 .card {
-    width: 160px;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #ffffff;
+    width: 140px;
+    min-width: 140px;
+    flex: 0 0 140px;
+    background: #000;
     cursor: pointer;
 }
 
 .imageContainer {
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
     position: relative;
+    width: 140px;
+    height: 146px;
+    overflow: hidden;
+    border-radius: 7px 7px 0 0;
 }
 
 .image {
@@ -20,20 +21,38 @@
     display: block;
 }
 
+.followContainer {
+    width: 140px;
+    height: 30px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    border-radius: 0 0 7px 7px;
+}
+
 .chip {
-    position: absolute !important;
-    bottom: 8px;
-    left: 8px;
-    background-color: #000000 !important;
-    color: #ffffff !important;
-    height: 24px !important;
-    font-size: 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 20px !important;
+    padding: 0 8px !important;
+    background: #111 !important;
+    color: #fff !important;
+    border-radius: 10px !important;
+    font-size: 9px !important;
+    font-weight: 500;
+    line-height: 1;
 }
 
 .title {
-  padding: 10px;
-  font-size: 14px;
-  font-family: "Poppins", sans-serif;
-  color: #000000;
-  font-weight: 500;
+    width: 140px;
+    padding-top: 6px;
+    background: #000;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
