@@ -1,0 +1,9 @@
+.button {
+  background-color: #000;
+  color: #34c94b;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+}
