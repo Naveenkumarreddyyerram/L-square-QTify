@@ -1,0 +1,39 @@
+.card {
+    width: 160px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.imageContainer {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.chip {
+    position: absolute !important;
+    bottom: 8px;
+    left: 8px;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    height: 24px !important;
+    font-size: 10px !important;
+}
+
+.title {
+  padding: 10px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  color: #000000;
+  font-weight: 500;
+}
