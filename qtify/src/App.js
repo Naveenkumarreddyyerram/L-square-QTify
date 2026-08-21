@@ -27,34 +27,53 @@ function HomePage({ onSongSelect }) {
         isSongs={true}
         onSongSelect={onSongSelect}
       />
-      <Footer />
     </>
   );
 }
 
 function App() {
   const [searchData, setSearchData] = useState([]);
-  const [currentSong, setCurrentSong] = useState(null);
+  const [playlist, setPlaylist] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
-    const fetchSearchData = async () => {
+    const fetchData = async () => {
       try {
-        const [topRes, newRes] = await Promise.all([
+        const [topRes, newRes, songsRes] = await Promise.all([
           axios.get("https://qtify-backend.labs.crio.do/albums/top"),
           axios.get("https://qtify-backend.labs.crio.do/albums/new"),
+          axios.get("https://qtify-backend.labs.crio.do/songs"),
         ]);
         setSearchData([...(topRes.data || []), ...(newRes.data || [])]);
+        setPlaylist(songsRes.data || []);
       } catch (err) {
         console.error(err);
       }
     };
 
-    fetchSearchData();
+    fetchData();
   }, []);
 
-  const handleSongSelect = (song) => {
-    setCurrentSong(song);
+  const handleSongSelect = (song, customPlaylist = null) => {
+    const activeList = customPlaylist && customPlaylist.length > 0 ? customPlaylist : playlist;
+    if (customPlaylist && customPlaylist.length > 0) {
+      setPlaylist(customPlaylist);
+    }
+    const idx = activeList.findIndex((item) => (item.id || item.title) === (song.id || song.title));
+    setCurrentIndex(idx !== -1 ? idx : 0);
   };
+
+  const handleNext = () => {
+    if (playlist.length === 0) return;
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % playlist.length);
+  };
+
+  const handlePrev = () => {
+    if (playlist.length === 0) return;
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? playlist.length - 1 : prevIndex - 1));
+  };
+
+  const currentSong = currentIndex >= 0 ? playlist[currentIndex] : null;
 
   return (
     <div className="App">
@@ -72,8 +91,8 @@ function App() {
       <Footer />
       <SongPlayer
         currentSong={currentSong}
-        onNext={() => {}}
-        onPrev={() => {}}
+        onNext={handleNext}
+        onPrev={handlePrev}
       />
     </div>
   );

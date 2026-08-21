@@ -79,7 +79,7 @@ export default function AlbumPage({ onSongSelect }) {
             {currentSongs.map((song, i) => (
               <tr
                 key={song.id || i}
-                onClick={() => onSongSelect && onSongSelect(song)}
+                onClick={() => onSongSelect && onSongSelect(song, songs)}
                 className={styles.row}
               >
                 <td>{startIndex + i + 1}</td>

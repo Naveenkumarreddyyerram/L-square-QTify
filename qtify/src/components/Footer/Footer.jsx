@@ -1,90 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import styles from "./Footer.module.css";
 
-const faqs = [
-    {
-        question: "Is QTify free to use?",
-        answer: "Yes, QTify is completely free to use.",
-    },
-    {
-        question: "Can I download and listen to songs offline?",
-        answer: "Sorry, unfortunately we don't provide the service to download any songs.",
-    },
-    {
-        question: "Can I listen to songs without creating an account?",
-        answer: "Yes, you can listen to songs without creating an account.",
-    },
-    {
-        question: "Does QTify have advertisements?",
-        answer: "QTify provides a smooth music listening experience.",
-    },
-];
+export default function Footer() {
+  const [faqs, setFaqs] = useState([]);
 
-const Footer = () => {
-    const [openIndex, setOpenIndex] = useState(null);
-
-    const handleToggle = (index) => {
-        setOpenIndex((currentIndex) =>
-            currentIndex === index ? null : index
-        );
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const response = await axios.get("https://qtify-backend.labs.crio.do/faq");
+        setFaqs(response.data?.data || []);
+      } catch (err) {
+        console.error(err);
+      }
     };
+    fetchFaqs();
+  }, []);
 
-    return (
-        <footer className={styles.footer}>
-            <h2 className={styles.heading}>FAQs</h2>
-
-            <div className={styles.faqContainer}>
-                {faqs.map((faq, index) => {
-                    const isOpen = openIndex === index;
-
-                    return (
-                        <div
-                            className={styles.faq}
-                            key={faq.question}
-                        >
-                            <button
-                                className={`${styles.question} ${
-                                    isOpen ? styles.open : ""
-                                }`}
-                                onClick={() => handleToggle(index)}
-                                aria-expanded={isOpen}
-                            >
-                                <span>{faq.question}</span>
-
-                                <span
-                                    className={`${styles.arrow} ${
-                                        isOpen ? styles.arrowOpen : ""
-                                    }`}
-                                >
-                                    <svg
-                                        width="28"
-                                        height="28"
-                                        viewBox="0 0 28 28"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M6 10L14 18L22 10"
-                                            stroke="currentColor"
-                                            strokeWidth="3"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                </span>
-                            </button>
-
-                            {isOpen && (
-                                <div className={styles.answer}>
-                                    {faq.answer}
-                                </div>
-                            )}
-                        </div>
-                    );
-                })}
-            </div>
-        </footer>
-    );
-};
-
-export default Footer;
+  return (
+    <footer className={styles.footer}>
+      <h2 className={styles.heading}>FAQs</h2>
+      <div className={styles.accordionContainer}>
+        {faqs.map((faq, index) => (
+          <Accordion
+            key={index}
+            className={styles.accordion}
+            disableGutters
+            elevation={0}
+          >
+            <AccordionSummary
+              expandIcon={
+                <svg
+                  className={styles.expandIcon}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 9L12 15L18 9"
+                    stroke="#34c94b"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              }
+              className={styles.summary}
+            >
+              <span className={styles.question}>{faq.question}</span>
+            </AccordionSummary>
+            <AccordionDetails className={styles.details}>
+              <span className={styles.answer}>{faq.answer}</span>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </div>
+    </footer>
+  );
+}

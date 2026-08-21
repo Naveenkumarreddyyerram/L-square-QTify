@@ -8,9 +8,12 @@ export default function SongPlayer({ currentSong, onNext, onPrev }) {
   const [duration, setDuration] = useState(0);
 
   useEffect(() => {
-    if (audioRef.current && currentSong?.audioSrc) {
+    if (audioRef.current && currentSong) {
       audioRef.current.load();
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      audioRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
     }
   }, [currentSong]);
 
@@ -82,12 +85,12 @@ export default function SongPlayer({ currentSong, onNext, onPrev }) {
 
       <div className={styles.controlsSection}>
         <div className={styles.buttons}>
-          <button className={styles.controlBtn} onClick={onPrev}>
+          <button className={styles.controlBtn} onClick={onPrev} aria-label="Previous Song">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
               <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
             </svg>
           </button>
-          <button className={styles.playBtn} onClick={togglePlay}>
+          <button className={styles.playBtn} onClick={togglePlay} aria-label="Play/Pause">
             {isPlaying ? (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
@@ -98,7 +101,7 @@ export default function SongPlayer({ currentSong, onNext, onPrev }) {
               </svg>
             )}
           </button>
-          <button className={styles.controlBtn} onClick={onNext}>
+          <button className={styles.controlBtn} onClick={onNext} aria-label="Next Song">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
               <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
             </svg>
