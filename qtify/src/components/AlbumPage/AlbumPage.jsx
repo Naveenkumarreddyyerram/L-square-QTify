@@ -106,5 +106,6 @@ export default function AlbumPage({ onSongSelect }) {
         )}
       </div>
     </div>
+    
   );
 }
