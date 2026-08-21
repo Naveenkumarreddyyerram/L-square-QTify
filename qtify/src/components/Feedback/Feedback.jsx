@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Feedback.module.css";
 
-export default function Feedback({ onClose }) {
+function Feedback({ onClose }) {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -16,8 +16,6 @@ export default function Feedback({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Feedback submitted:", formData);
-    // Add submission/API logic here
     onClose();
   };
 
@@ -85,3 +83,5 @@ export default function Feedback({ onClose }) {
     </div>
   );
 }
+
+export default Feedback;

@@ -6,106 +6,128 @@ import { styled } from "@mui/system";
 import { truncate } from "../../helpers/helpers";
 import { useNavigate } from "react-router-dom";
 
-const Listbox = styled("ul")(({ theme }) => ({
+const Listbox = styled("ul")({
   width: "100%",
   margin: 0,
-  padding: 0,
+  padding: "10px 14px",
   position: "absolute",
-  borderRadius: "0px 0px 10px 10px",
-  border: "1px solid var(--color-primary)",
-  top: 60,
-  height: "max-content",
-  maxHeight: "500px",
-  zIndex: 10,
-  overflowY: "scroll",
+  borderRadius: "14px",
+  border: "1.5px solid var(--color-primary, #34c94b)",
+  top: "56px",
+  maxHeight: "450px",
+  zIndex: 999,
   left: 0,
-  bottom: 0,
   right: 0,
   listStyle: "none",
-  backgroundColor: "var(--color-black)",
-  overflow: "auto",
+  backgroundColor: "var(--color-black, #121212)",
+  overflowY: "auto",
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+  "&::-webkit-scrollbar": {
+    width: "6px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "#333333",
+    borderRadius: "4px",
+  },
   "& li.Mui-focused": {
-    backgroundColor: "#4a8df6",
-    color: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
     cursor: "pointer",
   },
   "& li:active": {
-    backgroundColor: "#2977f5",
-    color: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.12)",
   },
-}));
+});
 
-function Search({ searchData, placeholder }) {
+function Search({ searchData = [], placeholder }) {
+  const navigate = useNavigate();
+
   const {
     getRootProps,
-    value,
     getInputProps,
     getListboxProps,
     getOptionProps,
     groupedOptions,
+    value,
+    inputValue,
   } = useAutocomplete({
-    id: "use-autocomplete-demo",
+    id: "navbar-search-autocomplete",
     options: searchData || [],
-    getOptionLabel: (option) => option.title,
+    getOptionLabel: (option) => option?.title || "",
+    onChange: (event, selectedOption) => {
+      if (selectedOption?.slug) {
+        navigate(`/album/${selectedOption.slug}`);
+      }
+    },
   });
 
-  const navigate = useNavigate();
-  const onSubmit = (e, value) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
-    navigate(`/album/${value.slug}`);
-    //Process form data, call API, set state etc.
+    if (value && value.slug) {
+      navigate(`/album/${value.slug}`);
+    } else if (groupedOptions.length > 0) {
+      navigate(`/album/${groupedOptions[0].slug}`);
+    }
   };
 
   return (
-    <div style={{ position: "relative" }}>
-      <form
-        className={styles.wrapper}
-        onSubmit={(e) => {
-          onSubmit(e, value);
-        }}
-      >
-        <div {...getRootProps()}>
+    <div style={{ position: "relative", width: "100%" }}>
+      <form className={styles.wrapper} onSubmit={handleSubmit}>
+        <div {...getRootProps()} style={{ width: "100%" }}>
           <input
             name="album"
             className={styles.search}
             placeholder={placeholder}
-            required
             {...getInputProps()}
           />
         </div>
-        <div>
-          <button className={styles.searchButton} type="submit">
-            <SearchIcon />
-          </button>
-        </div>
+        <button className={styles.searchButton} type="submit">
+          <SearchIcon />
+        </button>
       </form>
-      {groupedOptions.length > 0 ? (
+
+      {inputValue.trim().length > 0 && groupedOptions.length > 0 && (
         <Listbox {...getListboxProps()}>
           {groupedOptions.map((option, index) => {
-            // console.log(option);
-            const artists = option.songs.reduce((accumulator, currentValue) => {
-              accumulator.push(...currentValue.artists);
-              return accumulator;
-            }, []);
+            const artists = option.songs
+              ? option.songs.reduce((acc, song) => {
+                  if (song.artists) acc.push(...song.artists);
+                  return acc;
+                }, [])
+              : [];
+
+            const artistString =
+              artists.length > 0
+                ? artists.join(", ")
+                : option.description || "Artists names with comma separated values";
 
             return (
               <li
+                key={option.id || option.slug || index}
                 className={styles.listElement}
                 {...getOptionProps({ option, index })}
               >
-                <div>
+                <img
+                  src={option.image}
+                  alt={option.title}
+                  className={styles.albumImage}
+                />
+                <div className={styles.albumDetails}>
                   <p className={styles.albumTitle}>{option.title}</p>
-
                   <p className={styles.albumArtists}>
-                    {truncate(artists.join(", "), 40)}
+                    {truncate(artistString, 40)}
                   </p>
+                </div>
+                <div className={styles.albumFollows}>
+                  {option.follows || 100} Follows
                 </div>
               </li>
             );
           })}
         </Listbox>
-      ) : null}
+      )}
     </div>
   );
 }

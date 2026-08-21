@@ -1,12 +1,16 @@
 .overlay {
   position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #121212;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
   padding: 16px;
+  box-sizing: border-box;
 }
 
 .modal {
@@ -30,7 +34,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #111827;
+  color: #121212
 }
 
 .closeBtn {
@@ -40,7 +44,7 @@
   background: none;
   border: none;
   font-size: 1.1rem;
-  color: #374151;
+  color: #121212;
   cursor: pointer;
   padding: 4px;
 }
@@ -54,17 +58,18 @@
 .input {
   width: 100%;
   padding: 12px 16px;
-  border: 1.5px solid #28c76f;
+  border: 1.5px solid #34c94b;
   border-radius: 8px;
   font-size: 0.95rem;
   color: #1f2937;
   outline: none;
   box-sizing: border-box;
-  background-color: #fff;
+  background-color: #ffffff;
+  font-family: inherit;
 }
 
 .input:focus {
-  border-color: #1ea85c;
+  border-color: #34c94b;
   box-shadow: 0 0 0 2px rgba(40, 199, 111, 0.25);
 }
 
@@ -81,7 +86,7 @@
   align-self: center;
   margin-top: 8px;
   padding: 12px 32px;
-  background-color: #28c76f;
+  background-color: #34c94b;
   color: #ffffff;
   font-size: 1rem;
   font-weight: 700;
