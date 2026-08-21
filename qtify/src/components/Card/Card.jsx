@@ -1,28 +1,32 @@
 import React from "react";
 import styles from "./Card.module.css";
 
-const Card = ({ image, follows, title }) => {
+const Card = ({
+    image,
+    title,
+    follows,
+    likes,
+    isSong = false,
+}) => {
     return (
         <div className={styles.card}>
-
             <div className={styles.imageContainer}>
                 <img
-                    className={styles.image}
                     src={image}
                     alt={title}
+                    className={styles.image}
                 />
             </div>
 
-            <div className={styles.followContainer}>
+            <div className={styles.info}>
                 <span className={styles.chip}>
-                    {follows} Follows
+                    {isSong
+                        ? `${likes || 0} Likes`
+                        : `${follows || 0} Follows`}
                 </span>
             </div>
 
-            <div className={styles.title}>
-                {title}
-            </div>
-
+            <p className={styles.title}>{title}</p>
         </div>
     );
 };

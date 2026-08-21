@@ -1,39 +1,90 @@
-.search {
-  padding: 14px 20px;
-  height: 20px;
-  border-radius: 8px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-  border: 1px solid #121212;
-  width: 568px;
+.wrapper {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: stretch;
+    box-sizing: border-box;
 }
 
-.wrapper {
-  display: flex;
-  align-items: stretch;
-  height: 48px;
+.search {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    height: 48px;
+    padding: 0 20px;
+    border: 1px solid #121212;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    outline: none;
+    background-color: #ffffff;
+    color: #121212;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.search::placeholder {
+    color: #777777;
+    opacity: 1;
 }
 
 .searchButton {
-  border-radius: 0px 8px 8px 0px;
-  padding: 14px 20px;
-  height: 100%;
-  border: 1px solid var(--color-black);
-  border-left: none;
-  cursor: pointer;
-  height: 100%;
+    flex: 0 0 62px;
+    width: 62px;
+    height: 48px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #121212;
+    border-radius: 0 8px 8px 0;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.searchButton svg {
+    width: 24px;
+    height: 24px;
 }
 
 .listElement {
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
 }
 
 .albumTitle {
-  font-size: 16px;
+    margin: 0;
+    font-size: 16px;
 }
 
 .albumArtists {
-  font-size: 12px;
+    margin: 4px 0 0;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .search {
+        padding: 0 16px;
+        font-size: 13px;
+    }
+
+    .searchButton {
+        flex-basis: 54px;
+        width: 54px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search {
+        padding: 0 12px;
+        font-size: 12px;
+    }
+
+    .searchButton {
+        flex-basis: 48px;
+        width: 48px;
+    }
 }
