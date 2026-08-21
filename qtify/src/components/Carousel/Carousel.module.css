@@ -1,0 +1,61 @@
+.carouselContainer {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.swiper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.swiper :global(.swiper-wrapper) {
+    align-items: flex-start;
+}
+
+.swiper :global(.swiper-slide) {
+    height: auto;
+    box-sizing: border-box;
+}
+
+.navigationButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #34c94b;
+    z-index: 20;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leftNavigation {
+    left: 0;
+}
+
+.rightNavigation {
+    right: 0;
+}
+
+.navigationButton svg {
+    width: 40px;
+    height: 40px;
+}
+
+@media (max-width: 600px) {
+    .navigationButton {
+        width: 32px;
+        height: 32px;
+    }
+
+    .navigationButton svg {
+        width: 32px;
+        height: 32px;
+    }
+}
